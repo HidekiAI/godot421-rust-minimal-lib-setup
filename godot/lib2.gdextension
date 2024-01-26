@@ -1,0 +1,14 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.2.1
+
+[libraries]
+linux.debug.x86_64 =     "res://../../rust/lib2/target/debug/liblib2_rust.so"
+linux.release.x86_64 =   "res://../../rust/lib2/target/release/liblib2_rust.so"
+windows.debug.x86_64 =   "res://../../rust/lib2/target/debug/lib2_rust.dll"
+windows.release.x86_64 = "res://../../rust/lib2/target/release/lib2_rust.dll"
+macos.debug =            "res://../../rust/lib2/target/debug/liblib2_rust.dylib"
+macos.release =          "res://../../rust/lib2/target/release/liblib2_rust.dylib"
+macos.debug.arm64 =      "res://../../rust/lib2/target/debug/liblib2_rust.dylib"
+macos.release.arm64 =    "res://../../rust/lib2/target/release/liblib2_rust.dylib"
+
