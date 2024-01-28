@@ -5,7 +5,11 @@
 _ARG1_PLATFORM="windows"
 _ARG2_LIBS="lib1 lib2"
 _GODOT_PROJECT="../godot/godot-rust-hello_world/"
-_GODOT_VERSION="4.2"
+
+# NOTE: Even if using 4.2.1 (i.e. --dump-extension-api says it's 4.2.1), you only set major/minor and set the version to "4.2" instead of "4.2.1"
+# or else you will get a 'No GDExtension library found for current OS and architecture' error
+_GODOT_VERSION="4.1"
+
 if [ x"$1" != x"" ]; then
   _ARG1_PLATFORM=$1
   shift
@@ -16,10 +20,10 @@ if [ x"$1" != x"" ]; then
 fi
 
 
-# Apparently, for 4.2.1, the format has changed to "${_PLATFORM}.template_${_TARGET}.${_ARCH}.${_PLATFORM_EXT}"
-# ${_PLATFORM}.${_TARGET}.${_ARCH} = "res://../../rust/${_LIB_NAME}/target/${_TARGET}/lib${_LIB_NAME}.${_PLATFORM}.template_${_TARGET}.${_ARCH}.${_PLATFORM_EXT}"
-# ${_PLATFORM}.${_ARCH}            = "res://../../rust/${_LIB_NAME}/target/${_TARGET}/lib${_LIB_NAME}.${_PLATFORM}.template_${_TARGET}.${_ARCH}.${_PLATFORM_EXT}"
-#
+# let's first check the version of the API
+ pushd . ; cd /tmp ; $GODOT4_BIN --headless --dump-extension-api ; head  extension_api.json ; popd
+ echo "Will be setting VERSION: 'compatibility_minimum = ${_GODOT_VERSION}' in the .gdextension file..."
+
 # Aarg1: libname (i.e. "lib_rust_1")
 # Arg2: (Optional) Platform; if not passed, assumes Linux
 # Arg3: (Optional) target; if not passed, assumes Debug
@@ -56,7 +60,10 @@ function make_libname() {
         _PLATFORM_EXT="dylib"
     fi
 
-    echo "target/${_TARGET}/${_LIB_NAME}.${_PLATFORM}.template_${_TARGET}.${_ARCH}.${_PLATFORM_EXT}"
+    # NOTE: Though this format is unnecessary, especially since you can distinctly spot .so vs .dll to know that which file belongs to which OS
+    # but having it named explicit like this will help on flattened directory structure where filename is the namespace
+    #echo "target/${_TARGET}/${_LIB_NAME}.${_PLATFORM}.template_${_TARGET}.${_ARCH}.${_PLATFORM_EXT}"
+    echo "target/${_TARGET}/${_LIB_NAME}.${_PLATFORM_EXT}"
 }
 
 

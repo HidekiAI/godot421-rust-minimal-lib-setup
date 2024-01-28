@@ -1,3 +1,7 @@
 [gd_scene format=3 uid="uid://ceb78rpls0i8f"]
 
 [node name="main2d" type="Node2D"]
+
+[node name="MyExtensionStructLib2" type="MyExtensionStructLib2" parent="."]
+
+[node name="MyExtensionStructLib1" type="MyExtensionStructLib1" parent="."]

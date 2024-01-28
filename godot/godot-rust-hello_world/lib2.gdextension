@@ -1,9 +1,9 @@
 
 [configuration]
 entry_symbol = "gdext_rust_init"
-compatibility_minimum = 4.2
+compatibility_minimum = 4.1
 
 [libraries]
-windows.debug.x86_64 =   "res://../../rust/lib2/target/debug/lib2.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "res://../../rust/lib2/target/release/lib2.windows.template_release.x86_64.dll"
-windows.x86_64 =         "res://../../rust/lib2/target/debug/lib2.windows.template_debug.x86_64.dll"
+windows.debug.x86_64 =   "res://../../rust/lib2/target/debug/lib2.dll"
+windows.release.x86_64 = "res://../../rust/lib2/target/release/lib2.dll"
+windows.x86_64 =         "res://../../rust/lib2/target/debug/lib2.dll"
