@@ -1,9 +1,18 @@
 #!/bin/bash
 # Assumes dir matches lib-name!
 # arg1: platform
-# arg2...: libs
+# arg2...: libs (quoted space-separated)
+
+# NOTE: We want to make sure to build shared_internal_lib before lib1 and lib2 (dependencies)
+# if such dependencies starts to annoy you (harder to manage because there are so many),
+# try switching over to Makefiles, which you can define dependencies between targets.
+# Note that both lib1 and lib2 has its Cargo.toml set with dependencies for shared_internal_lib
+# but that's as far as it can go on dependencies of compilation order; it is up to the
+# tools and scripts to make sure they are built in order...
+
 _ARG1_PLATFORM="windows"
 _ARG2_LIBS="lib1 lib2"
+#_ARG2_LIBS="shared_interal_lib lib1 lib2"
 _GODOT_PROJECT="../godot/godot-rust-hello_world/"
 
 # NOTE: Even if using 4.2.1 (i.e. --dump-extension-api says it's 4.2.1), you only set major/minor and set the version to "4.2" instead of "4.2.1"
@@ -18,7 +27,6 @@ if [ x"$1" != x"" ]; then
     _ARG2_LIBS=$@
   fi
 fi
-
 
 # let's first check the version of the API
  pushd . ; cd /tmp ; $GODOT4_BIN --headless --dump-extension-api ; head  extension_api.json ; popd

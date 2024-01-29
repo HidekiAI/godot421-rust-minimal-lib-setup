@@ -34,7 +34,7 @@ pub mod entry_point {
         internal_obj1: my_rust_lib::my_rust_lib::MyStruct,
         internal_obj2: my_rust_lib::my_rust_lib::MyStruct2,
         internal_obj3: my_rust_lib::my_rust_lib::MyStruct3,
-        internal_obj4: my_rust_lib::my_rust_lib::MyStructNode2D,
+        internal_obj4: my_rust_lib::my_rust_lib::MyStruct4,
     }
 
     #[godot_api]
@@ -49,7 +49,8 @@ pub mod entry_point {
                 internal_i64: 0,
                 internal_obj1: my_rust_lib::my_rust_lib::MyStruct::new(Some(1), Some(3.0)),
                 internal_obj2: my_rust_lib::my_rust_lib::MyStruct2::new(Some(1), Some(3.0)),
-                internal_obj3: my_rust_lib::my_rust_lib::MyStruct3::new(Some(1), Some(3.0))
+                internal_obj3: my_rust_lib::my_rust_lib::MyStruct3::new(Some(1), Some(3.0)),
+                internal_obj4: my_rust_lib::my_rust_lib::MyStruct4::new(Some(1), Some(3.0)),
             }
         }
 

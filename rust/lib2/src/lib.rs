@@ -1,17 +1,26 @@
+use shared_internal_lib;    // shared crate
 use godot::prelude::*;
+
+mod my_rust_lib2;
 
 // CRITICAL: __MUST__ expose entry point or else you will get the error:
 // "GDExtension entry point 'gdext_rust_init' not found in library ..."
+// NOTE that there are ONE and ONLY ONE entry point per library.
 #[gdextension]
-unsafe impl ExtensionLibrary for my_rust_lib2::MyExtensionStructLib2 {}
+unsafe impl ExtensionLibrary for entry_point::Node2D_MyExtensionStructLib2 {}
 
-pub mod my_rust_lib2 {
+pub mod entry_point {
     use godot::engine::Node2D;
     use godot::prelude::*;
+    use crate::my_rust_lib2;
 
-    #[derive(GodotClass)]
+    // Odd (and annoying) as the naming may be, because Godot Editor does not show namespaces
+    // (but it does show up under corect parent that BASE is based off of), for clarity purpose,
+    // I will name them as "<ParentNode>_<ObjectName>" so that when adding nodes in Godot Editor,
+    // if you have Lib1::MyStruct and Lib2::MyStruct, it will distinguish them
+    #[derive(godot::register::GodotClass)]
     #[class(base = Node2D)]
-    pub struct MyExtensionStructLib2 {
+    pub struct Node2D_MyExtensionStructLib2 {
         base: Base<Node2D>,
 
         #[var]
@@ -19,37 +28,47 @@ pub mod my_rust_lib2 {
 
         #[var]
         my_f64: f64,
+
+        // vars that are not exposed to Godot Editor
+        internal_i64: i64,
+        internal_obj1: my_rust_lib2::my_rust_lib2::MyStruct,
+        internal_obj2: my_rust_lib2::my_rust_lib2::MyStruct2,
+        internal_obj3: my_rust_lib2::my_rust_lib2::MyStruct3,
+        internal_obj4: my_rust_lib2::my_rust_lib2::MyStruct4,
     }
 
     #[godot_api]
-    impl INode2D for MyExtensionStructLib2 {
+    impl INode2D for Node2D_MyExtensionStructLib2 {
         fn init(base: Base<Node2D>) -> Self {
-            godot_print!("my_rust_lib2::MyExtensionStructLib2::init(): Hello, world!"); // Prints to the Godot console
+            godot_print!("my_rust_lib::Node2D_MyExtensionStructLib1::init(): Hello, world!"); // Prints to the Godot console
 
             Self {
                 base,
                 my_i64: 0,
                 my_f64: 0.0,
+                internal_i64: 0,
+                internal_obj1: my_rust_lib2::my_rust_lib2::MyStruct::new(Some(1), Some(3.0)),
+                internal_obj2: my_rust_lib2::my_rust_lib2::MyStruct2::new(Some(1), Some(3.0)),
+                internal_obj3: my_rust_lib2::my_rust_lib2::MyStruct3::new(Some(1), Some(3.0)),
+                internal_obj4: my_rust_lib2::my_rust_lib2::MyStruct4::new(Some(1), Some(3.0)),
             }
         }
 
         fn ready(&mut self) {
-            godot_print!("my_rust_lib2::MyExtensionStructLib2::ready(): Hello, world!"); // Prints to the Godot console
+            godot_print!("my_rust_lib::Node2D_MyExtensionStructLib1::_ready(): Hello, world!");
+            // Prints to the Godot console
         }
-
-        //fn physics_process(&mut self, delta: f64) {
-        //}
     }
 
     #[godot_api]
-    impl MyExtensionStructLib2 {
+    impl Node2D_MyExtensionStructLib2 {
         #[func]
-        fn get_i64(&self) -> i64 {
+        pub fn get_i64(&self) -> i64 {
             self.my_i64
         }
 
         #[func]
-        fn set_i64(&mut self, val: i64) {
+        pub fn set_i64(&mut self, val: i64) {
             self.my_i64 = val;
         }
 
@@ -61,6 +80,11 @@ pub mod my_rust_lib2 {
         #[func]
         pub fn set_f64(&mut self, val: f64) {
             self.my_f64 = val;
+        }
+
+        #[func]
+        pub fn get_internal_i64(&self) -> i64 {
+            self.internal_i64
         }
     }
 }
