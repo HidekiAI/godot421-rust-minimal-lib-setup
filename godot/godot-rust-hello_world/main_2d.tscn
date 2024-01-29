@@ -2,6 +2,14 @@
 
 [node name="main2d" type="Node2D"]
 
-[node name="MyExtensionStructLib2" type="MyExtensionStructLib2" parent="."]
+[node name="Node_MyExtensionStructLib1" type="Node_MyExtensionStructLib1" parent="."]
 
-[node name="MyExtensionStructLib1" type="MyExtensionStructLib1" parent="."]
+[node name="MyStructNode2DForLib1" type="MyStructNode2DForLib1" parent="Node_MyExtensionStructLib1"]
+
+[node name="MyStruct" type="MyStruct" parent="Node_MyExtensionStructLib1/MyStructNode2DForLib1"]
+
+[node name="MyStructNode2DForLib2" type="MyStructNode2DForLib1" parent="Node_MyExtensionStructLib1"]
+
+[node name="MyStructForLib2" type="MyStructForLib2" parent="Node_MyExtensionStructLib1/MyStructNode2DForLib2"]
+
+[node name="MyStruct" type="MyStruct" parent="Node_MyExtensionStructLib1/MyStructNode2DForLib2/MyStructForLib2"]

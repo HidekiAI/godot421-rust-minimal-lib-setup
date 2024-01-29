@@ -3,6 +3,12 @@ name = "shared_internal_lib"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+# Will support both dynamic and static libraries:
+[lib]
+# NOTE: Currently, only will support static-lib (for Windows platform) because dynamic-lib causes linker error:
+#     = note: LINK : fatal error LNK1189: library limit of 65535 objects exceeded
+#crate-type = ["rlib", "dylib"]
+crate-type = ["rlib"]
 
 [dependencies]
+godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }

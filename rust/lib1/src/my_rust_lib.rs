@@ -21,7 +21,7 @@ pub mod my_rust_lib {
     // uses Node2D
     #[derive(GodotClass)]
     #[class(base=Node2D)]
-    pub struct MyStructNode2D {
+    pub struct MyStructNode2DForLib1 {
         base: Base<Node2D>,
         #[var]
         my_i64: i64,
@@ -81,9 +81,9 @@ pub mod my_rust_lib {
     }
 
     #[godot_api]
-    impl INode2D for MyStructNode2D {
+    impl INode2D for MyStructNode2DForLib1 {
         fn init(base: Base<Node2D>) -> Self {
-            godot_print!("my_rust_lib::MyStructNode2D::init(): Hello, world!"); // Prints to the Godot console
+            godot_print!("my_rust_lib::MyStructNode2D::init(): 'godot-rust-hello_world' app"); // Prints to the Godot console
             Self {
                 base,
                 my_i64: 0,
@@ -91,19 +91,13 @@ pub mod my_rust_lib {
             }
         }
         fn ready(&mut self) {
-            godot_print!("my_rust_lib::MyStructNode2D::_ready(): Hello, world!");
+            godot_print!("my_rust_lib::MyStructNode2D::_ready(): 'godot-rust-hello_world' app");
             // Prints to the Godot console
         }
     }
 
-    impl MyStructNode2D {
-        pub fn new(arg1: Option<i64>, arg2: Option<f64>) -> Self {
-            Self {
-                base: Node2D::new().into(),
-                my_i64: arg1.unwrap_or_default(),
-                my_f64: arg2.unwrap_or_default(),
-            }
-        }
+    impl MyStructNode2DForLib1 {
+        // cannot impl fn new() because this struct HasA Godot classes that are controlled by Init()
         pub fn set_f64(&mut self, f64: f64) {
             self.my_f64 = f64;
         }

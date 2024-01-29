@@ -4,19 +4,46 @@ pub mod my_rust_lib2 {
     use godot::prelude::*;
 
     #[derive(GodotClass)]
-    #[class(base=TileMap)]
-    pub struct MyObjectTileMap {
+    #[class(base=Node)]
+    pub struct MyStructForLib2 {
+        base: Base<Node>,
+
         my_i64: i64,
+
         my_f64: f64,
     }
 
-    impl MyStruct {
-        pub fn new(parm1: Option<i64>, parm2: Option<f64>) -> Self {
+    #[godot_api]
+    impl INode for MyStructForLib2 {
+        fn init(base: Base<Node>) -> Self {
             Self {
-                my_i64: parm1.unwrap_or_default(),
-                my_f64: parm2.unwrap_or_default(),
+                base,
+                my_i64: 0,
+                my_f64: 0.0,
             }
         }
     }
 
+    #[godot_api]
+    impl MyStructForLib2 {
+        #[func]
+        pub fn get_i64(&self) -> i64 {
+            self.my_i64
+        }
+
+        #[func]
+        pub fn set_i64(&mut self, val: i64) {
+            self.my_i64 = val;
+        }
+
+        #[func]
+        pub fn get_f64(&self) -> f64 {
+            self.my_f64
+        }
+
+        #[func]
+        pub fn set_f64(&mut self, val: f64) {
+            self.my_f64 = val;
+        }
+    }
 }
