@@ -1,6 +1,8 @@
 # godot421-rust-minimal-lib-setup
 
-Sample project setup for Linux+Windows on Godot 4.2.1 with godot-rust with 2 libs (lib1 and lib2) deriving Node2D and NodeSprite2D, each calling '\_init()' and '\_ready()'
+Firstly, if you're just looking for a quick way to get a project started that binds godot-rust, just use [scaffold-godot-rust][1].  This project was created mainly because I was looking for others while I was troubleshooting why I wasn't getting my extensions to show up on Godot editor, and I could not find anything that was using v4.2 with latest GDExtension method (most were just using the old 3.x method).
+
+This is a sample project setup for Linux+Windows on Godot 4.2.1 with godot-rust with 2 libs (lib1 and lib2) deriving Node2D and NodeSprite2D, each calling '\_init()' and '\_ready()'
 
 Original intentions were first to get at least 2 rust libraries to be interacting with Godot; mainly because I could not stand this dynamic variants of GDScript when I was implementing an 2D Array[Array[]] of homogeneous dimensions, and due to unstrict types, I'd sometimes place a row of (the array is row-ordered)ref instead of actual array that was constructed to be added because append() (or was it insert()) can append a new row-set as ref when all other rows are actualy Array[Object], and during runtime, it'll just (implicitly?) dynamic cast that ref of Array[Object] as Array[Object] in which, because it failed dynamic casting, returns null... good grief! Perhaps back when I was on C++/C# days, it was perfectly fine to think like that...
 
@@ -13,6 +15,8 @@ P/S: Obviously, on a memory-tight machines (I'd imagine people who chooses Godot
 Few (opinionated) notes:
 
 - If you are attempting to implement 'lib.rs' to just do very simple things, don't bother, and use '.gd' GDScript instead. It's just a waste of time compiling and debugging/runtime-testing/verifying
+
+[1]: https://github.com/byteatatime/scaffold-godot-rust
 
 ## Technical Notes
 
@@ -55,6 +59,8 @@ Node structure:
 - Node2D_main - main.tscn
 - Node_lib1 - lib1.gdextension
 - Node_lib2 - lib2.gdextension
+
+![Screenshot of scene tree](./Godot_SceneTree_Structure.png)
 
 Originally, I wanted to create Node_lib1 to be TileMap but I thought it would just make this sample more complicated than it is, so I went with generic do-nothing Node instead (same with Node2D_lib2)
 
