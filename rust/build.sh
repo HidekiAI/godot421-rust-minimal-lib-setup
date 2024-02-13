@@ -1,8 +1,13 @@
 #!/bin/bash
 # Assumes dir matches lib-name!
 # arg1: platform
-# arg2...: libs
+# arg2...: libs (quoted space-separated)
+
 _ARG1_PLATFORM="windows"
+# NOTE: You do NOT need to include shared_internal_lib in the lib, this is because Cargo.toml
+# on EACH of the libs specifies the shared_internal_lib as a dependency using the "path=" syntax:
+#   shared_internal_lib = { path = "../shared_internal_lib" }
+# hence it will build and cache the shared_internal_lib for each of the libs.
 _ARG2_LIBS="lib1 lib2"
 _GODOT_PROJECT="../godot/godot-rust-hello_world/"
 
@@ -18,7 +23,6 @@ if [ x"$1" != x"" ]; then
     _ARG2_LIBS=$@
   fi
 fi
-
 
 # let's first check the version of the API
  pushd . ; cd /tmp ; $GODOT4_BIN --headless --dump-extension-api ; head  extension_api.json ; popd
