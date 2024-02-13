@@ -103,6 +103,8 @@ function make_gdext() {
     fi
 }
 
+#TODO: Rather than doing a for-loop to iterate through each dirs, just
+# create a Cargo.toml at root dir with [workspace] and be done with it!
 for _LIB_NAME in ${_ARG2_LIBS}; do
   echo -e "\nBuilding ${_LIB_NAME}"
   pushd .

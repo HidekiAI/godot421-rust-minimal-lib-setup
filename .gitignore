@@ -35,3 +35,4 @@ Cargo.lock
 .vscode/
 bin/
 
+tags
